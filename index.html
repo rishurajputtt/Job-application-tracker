@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10131c">
+  <title>CareerFlow — Job Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#">
+      <span class="brand-icon">C</span>
+      CareerFlow
+    </a>
+
+    <p class="nav-label">WORKSPACE</p>
+    <a class="nav-item active" href="#dashboard">▦ &nbsp; Dashboard</a>
+    <a class="nav-item" href="#applications">▤ &nbsp; Applications</a>
+
+    <div class="sidebar-bottom">
+      <div class="profile-avatar">Y</div>
+      <div>
+        <strong>My Career</strong>
+        <p>Job seeker workspace</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content" id="dashboard">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">YOUR CAREER WORKSPACE</p>
+        <h1>Job Application Tracker</h1>
+        <p class="subtitle">Every application brings you one step closer.</p>
+      </div>
+      <button class="primary-btn" id="addButton">+ Add application</button>
+    </header>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Total applications</span><span class="stat-icon">▤</span>
+        </div>
+        <h2 id="totalCount">0</h2>
+        <p>All tracked opportunities</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Interviews</span><span class="stat-icon purple">◎</span>
+        </div>
+        <h2 id="interviewCount">0</h2>
+        <p>Interview stage or beyond</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Offers</span><span class="stat-icon green">✓</span>
+        </div>
+        <h2 id="offerCount">0</h2>
+        <p>Offers received</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Rejected</span><span class="stat-icon red">↘</span>
+        </div>
+        <h2 id="rejectedCount">0</h2>
+        <p>Applications closed</p>
+      </article>
+    </section>
+
+    <section class="panel" id="applications">
+      <div class="panel-heading">
+        <div>
+          <h2>Your applications</h2>
+          <p>Manage and follow up on your opportunities.</p>
+        </div>
+        <button class="secondary-btn" id="exportButton">↓ Export CSV</button>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchInput" type="search"
+          placeholder="Search company or job title..." aria-label="Search applications">
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="All">All statuses</option>
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+        <select id="sortFilter" aria-label="Sort applications">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="company">Company A–Z</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>COMPANY / ROLE</th>
+              <th>DATE APPLIED</th>
+              <th>STATUS</th>
+              <th>JOB LINK</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="applicationList"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">↗</div>
+        <h3>No applications yet</h3>
+        <p>Add your first job application to start tracking your progress.</p>
+        <button class="primary-btn" id="emptyAddButton">+ Add your first application</button>
+      </div>
+      <p class="table-footer" id="resultCount">Showing 0 applications</p>
+    </section>
+
+    <footer>Made for your next opportunity. <span>CareerFlow © 2026</span></footer>
+  </main>
+
+  <dialog id="applicationDialog">
+    <form id="applicationForm">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">CAREER WORKSPACE</p>
+          <h2 id="dialogTitle">Add application</h2>
+        </div>
+        <button type="button" class="close-btn" id="closeDialog"
+          aria-label="Close dialog">✕</button>
+      </div>
+
+      <input type="hidden" id="editId">
+
+      <label for="company">Company name *</label>
+      <input id="company" required maxlength="100" placeholder="e.g. Google">
+
+      <label for="role">Job title *</label>
+      <input id="role" required maxlength="100" placeholder="e.g. Software Developer">
+
+      <div class="form-row">
+        <div>
+          <label for="dateApplied">Date applied *</label>
+          <input type="date" id="dateApplied" required>
+        </div>
+        <div>
+          <label for="status">Application status</label>
+          <select id="status">
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="jobLink">Job posting URL</label>
+      <input type="url" id="jobLink" maxlength="1000"
+        placeholder="https://company.com/careers/job">
+
+      <label for="notes">Notes</label>
+      <textarea id="notes" maxlength="3000" rows="3"
+        placeholder="Recruiter details, interview dates, follow-up reminders..."></textarea>
+
+      <p class="form-error" id="formError" role="alert"></p>
+
+      <div class="dialog-actions">
+        <button type="button" class="secondary-btn" id="cancelButton">Cancel</button>
+        <button type="submit" class="primary-btn" id="saveButton">Save application</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
